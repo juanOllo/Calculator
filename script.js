@@ -110,6 +110,8 @@ btnEqual.addEventListener("click", () => {
         
     } else {
 
+        contadoDeParesDePArentesis = 0;
+
         console.log("arrFormula antes de resolver: " + formulaFinal(arrFormula));
 
         arrFormula = formulaFinal(arrFormula);
@@ -270,10 +272,11 @@ const formulaFinal = (arr) => {
 }
 
 btnDel.addEventListener("click", () => {
-        errorMsj.innerText = "";
-        formula.innerText = "";
+    errorMsj.innerText = "";
+    formula.innerText = "";
     hist.innerText = "";
     arrFormula = [];
+    contadoDeParesDePArentesis = 0;
 })
 
 btnCl.addEventListener("click", () => {

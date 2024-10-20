@@ -23,14 +23,16 @@ body {
     justify-content: space-between;
 }
 
+@media only screen and (max-height: 55rem) {
+    .container{
+        margin-top: 3rem;
+    }
+}
+
 @media only screen and (max-width : 25rem) {
-    /* body {
-        background-color: red;
-    } */
     .container{
         max-width: 96vw;
         height: 150vw;
-        /* margin-left: 0; */
     }
     .buttons *{
         height: 17vw;
