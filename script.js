@@ -21,7 +21,7 @@ var arrFormula = [];
 pointBtn.addEventListener("click", () => {
 
     //FOR para q no pongas dos puntos en un mismo nro
-    for (let a = arrFormula.length-1; a>0; a++){
+    for (let a = arrFormula.length-1; a>0; a--){
         if (isNaN(arrFormula[a])){
             if (arrFormula[a] === "."){
                 errorMsj.innerText = "No puedes volver a introducir un punto"
@@ -57,7 +57,9 @@ for (let nBtn of nButtons){
 for (let oBtn of opButtons){
     oBtn.addEventListener("click", () => {
 
-        if ((oBtn.value!=="-" || (!isNaN(arrFormula[arrFormula.length-3]) && arrFormula[arrFormula.length-1]!=="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
+        //IF original 
+        // if ((oBtn.value!=="-" || (!isNaN(arrFormula[arrFormula.length-3]) && arrFormula[arrFormula.length-1]!=="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
+        if (!(oBtn.value==="-" && (!isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
             // console.log("doble ingreso de operador");
             errorMsj.innerText = "Ingresa un numero";
         } else {
