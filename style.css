@@ -1,0 +1,145 @@
+:root {
+    --orange : #FF6500;
+    --blue: #1E3E62;
+    --blackblue: #0B192C;
+    --black: #000000;
+    --white: #ffffff;
+}
+
+body {
+    background-color: var(--blackblue);
+    margin: 0;
+}
+
+.container {
+    background-color: var(--black);
+    width: 25rem;
+    height: 36rem;
+    margin: calc(50vh - 18rem) auto 0;
+    border-radius: 2rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width : 25rem) {
+    /* body {
+        background-color: red;
+    } */
+    .container{
+        max-width: 96vw;
+        height: 150vw;
+        /* margin-left: 0; */
+    }
+    .buttons *{
+        height: 17vw;
+        width: 17vw;
+    }
+}
+
+.screen {
+    display: block;
+    text-align: end;
+    background-color: var(--blue);
+    color: var(--white);
+    width: 90%;
+    height: 5rem;
+    margin: 1.5rem auto 1rem;
+    border-radius: 1rem;
+    font-size: 60px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    font-family: "Calculator", sans-serif;
+    overflow: hidden;
+}
+
+.historial {
+    position: relative;
+    top: 5.2rem;
+    right: 1.4rem;
+    width: 100%;
+    height: 0;
+    font-size: 1rem;
+    font-family: "Calculator", sans-serif;
+    color: rgb(153, 157, 182);
+    text-align: end;
+}
+
+.buttons {
+    height: 80%;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-rows: repeat(5, 1fr); */
+    grid-template-rows: repeat(5, 1fr);
+    row-gap: 1rem;
+    margin: 1rem;
+}
+
+button {
+    background-color: var(--blue);
+    border: none;
+    border-radius: 1rem;
+    /* color: #FF6500; */
+    color: aliceblue;
+    height: 4.5rem;
+    width: 4.5rem;
+    margin: auto;
+
+    font-size: 2rem;
+    font-weight: bolder;
+    font-family: "Agdasima", sans-serif;
+    /* font-weight: 900; */
+    font-style: normal;
+}
+
+.operator {
+    color: #FF6500;
+}
+
+.button-equal {
+    /* grid-column: 3/5; */
+    /* width: 10rem; */
+    width: 4.5rem;
+    background-color: var(--orange);
+    border-color: var(--blackblue);
+    font-size: 36px;
+    /* grid-row: 5/6; */
+}
+
+.button-delete {
+    background-color: crimson;
+} 
+
+#del {
+    color: crimson;
+}
+
+button:hover {
+    cursor: pointer;
+    scale: 1.2;
+}
+
+/* .button-equal:hover {
+    scale: 1.15;
+} */
+
+.hide {
+    background-color: transparent;
+}
+
+#error-msj {
+    background-color: #1E3E62;
+    color:silver;
+    padding: 0.7rem;
+    width: fit-content;
+    margin: 3rem auto;
+    /* margin: 0 auto; */
+    border-radius: 1rem;
+
+    font-size: 1.5rem;
+    font-weight: bolder;
+    font-family: "Agdasima", sans-serif;
+    font-style: normal;
+}

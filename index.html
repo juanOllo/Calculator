@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather</title>
+
+    <link href="https://fonts.cdnfonts.com/css/calculator" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- <h1>Calculator</h1> -->
+    <div class="container">
+        <div class="historial"></div>
+        <div class="screen" placeholder=""></div>
+        <div class="buttons">
+            <button class="button-delete">CE</button>
+            <button value="(" class="parent1">(</button>
+            <button value=")" class="parent2">)</button>
+            <button value="/" class="operator">/</button>
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button value="*" class="operator">*</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button value="-" class="operator">-</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button value="+" class="operator">+</button>
+            <button id="del"><<</button>
+            <button class="number">0</button>
+            
+            <button id="point">.</button>
+            <button class="button-equal">=</button>
+        </div>
+    </div>
+    <!-- <button id="negative">+/-</button> -->
+    <div id="error-msj"></div>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
