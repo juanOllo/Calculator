@@ -59,7 +59,7 @@ for (let oBtn of opButtons){
 
         //IF original 
         // if ((oBtn.value!=="-" || (!isNaN(arrFormula[arrFormula.length-3]) && arrFormula[arrFormula.length-1]!=="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
-        if (!(oBtn.value==="-" && (!isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
+        if (!(oBtn.value==="-" && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
             // console.log("doble ingreso de operador");
             errorMsj.innerText = "Ingresa un numero";
         } else {
