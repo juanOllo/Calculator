@@ -23,23 +23,6 @@ body {
     justify-content: space-between;
 }
 
-@media only screen and (max-height: 55rem) {
-    .container{
-        margin-top: 3rem;
-    }
-}
-
-@media only screen and (max-width : 25rem) {
-    .container{
-        max-width: 96vw;
-        height: 150vw;
-    }
-    .buttons *{
-        height: 17vw;
-        width: 17vw;
-    }
-}
-
 .screen {
     display: block;
     text-align: end;
@@ -98,6 +81,11 @@ button {
 
 .operator {
     color: #FF6500;
+    font-size: 2.5rem;
+}
+
+#point {
+    font-size: 2.5rem;
 }
 
 .button-equal {
@@ -116,6 +104,7 @@ button {
 
 #del {
     color: crimson;
+    font-size: 3rem;
 }
 
 button:hover {
@@ -127,21 +116,47 @@ button:hover {
     scale: 1.15;
 } */
 
-.hide {
-    background-color: transparent;
-}
-
 #error-msj {
-    background-color: #1E3E62;
+    /* background-color: #1E3E62; */
     color:silver;
     padding: 0.7rem;
     width: fit-content;
     margin: 3rem auto;
     /* margin: 0 auto; */
     border-radius: 1rem;
-
+    
     font-size: 1.5rem;
     font-weight: bolder;
     font-family: "Agdasima", sans-serif;
     font-style: normal;
+}
+
+.hide {
+    background-color: transparent;
+}
+
+@media only screen and (max-height: 55rem) {
+    .container{
+        margin-top: 7rem;
+    }
+    #error-msj {
+        position: absolute;
+        margin: 0;
+        text-align: center;
+
+        top: 3.5rem;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media only screen and (max-width : 25rem) {
+    .container{
+        max-width: 96vw;
+        height: 150vw;
+    }
+    .buttons *{
+        height: 17vw;
+        width: 17vw;
+    }
 }
