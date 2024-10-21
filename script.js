@@ -59,7 +59,7 @@ for (let oBtn of opButtons){
 
         //IF original 
         // if ((oBtn.value!=="-" || (!isNaN(arrFormula[arrFormula.length-3]) && arrFormula[arrFormula.length-1]!=="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
-        if (!(oBtn.value==="-" && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="(" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
+        if (!(oBtn.value==="-" && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="("  || arrFormula[arrFormula.length-1]===")" )) && (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") || arrFormula[arrFormula.length - 1] === ".") {
             // console.log("doble ingreso de operador");
             errorMsj.innerText = "Ingresa un numero";
         } else {
@@ -112,26 +112,51 @@ btnEqual.addEventListener("click", () => {
 
         contadoDeParesDePArentesis = 0;
 
-        console.log("arrFormula antes de resolver: " + formulaFinal(arrFormula));
+        // console.log("arrFormula antes de resolver: " + formulaFinal(arrFormula));
 
         arrFormula = formulaFinal(arrFormula);
 
         errorMsj.innerText = "";
-        hist.innerText = arrFormula.toString().replaceAll(",", " ");
+        // hist.innerText = arrFormula.toString().replaceAll(",", " ");
+        hist.innerText = cleanHistorial(arrFormula).toString().replaceAll(",", " ");
 
         const result = equal(arrFormula, 0);
-        
+
         (parseFloat(result) - parseInt(result))===0 ? formula.innerText = parseInt(result) : formula.innerText = parseFloat(result).toFixed(2);
-        
-        // formula.innerText = parseFloat(result).toFixed(2);
-        
-        // arrFormula = [];    //aun no se por q no es necesario
-        // arrFormula[0] = parseFloat(result);
+
         arrFormula = [...formula.innerText];
 
-        console.log("arrFormula desp de = : " + arrFormula);
+        // console.log("arrFormula desp de = : " + arrFormula);
     }
 })
+
+//acomoda el historial si hay un +- o un --
+const cleanHistorial = (arr) => {
+    for (let i = arr.length-1; i>1; i--){
+        if (arr[i]==="-" && (arr[i-1]==="+" || arr[i-1]==="-")){
+            switch (arr[i-1]){
+                case "-":
+                    arr[i-1] = "+";
+                    break;
+                case "+":
+                    arr[i-1] = "-";
+                    break;
+                default:
+                    break;
+            }
+
+            while (i<arr.length-1){
+                arr[i] = arr[i+1];
+                i++;
+                console.log("ea");
+            }
+
+            arr.length -= 1;
+            i = arr.length-1;
+        }
+    }
+    return arr;
+}
 
 const opFuns = [
     (x,y) => x * y,
@@ -280,6 +305,7 @@ btnDel.addEventListener("click", () => {
 })
 
 btnCl.addEventListener("click", () => {
+    errorMsj.innerText = "";
     let pop = arrFormula.pop();
     // console.log(pop);
     // console.log("nuevo ultimo: " + arrFormula[arrFormula.length-1]);
