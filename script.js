@@ -128,24 +128,35 @@ btnEqual.addEventListener("click", () => {
 
         contadoDeParesDePArentesis = 0;     //reinicia contador de parentesis
         
-        arrFormula = formulaFinal(arrFormula);      //reorganiza la formula: agrupa los tipo num seguidos y suprime los "*" repetidos
+        arrFormula = formulaFinal(arrFormula);      //reorganiza la formula: agrupa los tipo num consecutivos y suprime los "*" consecutivos
 
         //limpia la formula y la agrega al historial: remplaza los +,- y -,-
         hist.innerText = cleanHistorial(arrFormula).toString().replaceAll(",", " ");
-        // hist.innerText = arrFormula.toString().replaceAll(",", " ");
 
         const result = equal(arrFormula, 0);    //resuelve la ecuacion y la guarda en result
-
-        //trata el resultado que va a mostrar en pantalla
-        //si es float tambien muestra la parte decimal, si es int entonces no
-        (parseFloat(result) - parseInt(result))===0 ? formula.innerText = parseInt(result) : formula.innerText = parseFloat(result).toFixed(2);
-
-        //guarda el result separado por chars para volverlo a tratar de cualquier manera
-        arrFormula = [...formula.innerText];
+        
+        //IF que checkea que el resultado no sea infinito
+        if (!(regexNoPosibleResult.test(result))){
+            //trata el resultado que va a mostrar en pantalla
+            //  si es float tambien muestra la parte decimal, si es int entonces no
+            (parseFloat(result) - parseInt(result))===0 ? formula.innerText = parseInt(result) : formula.innerText = parseFloat(result).toFixed(2);
+            
+            //guarda el result char x char para volverlo a tratar de cualquier manera
+            arrFormula = [...formula.innerText];
+            
+        } else {
+            //  si el resultado es infinito se ejecuta todo esto
+            showErrMsj("Resultado infinito");
+            formula.innerText = ""
+            arrFormula = [];
+        }
 
         // console.log("arrFormula desp de = : " + arrFormula);
     }
 })
+
+//REGEX que no permite q el resultado sea Infinity, -Infiniy o NaN
+const regexNoPosibleResult = /I|N/;
 
 // << button event: borra ultimo elemento de arrFormula
 btnCl.addEventListener("click", () => {
