@@ -11,6 +11,39 @@ body {
     margin: 0;
 }
 
+#juanollo {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: start;
+    top: 4rem;
+
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-family: "Fraunces", serif;
+    color:#000000;
+}
+
+#juanollo * {
+    color:#1E3E62;
+}
+
+#juanollo *:hover {
+    color: #FF6500;
+    font-size: 2.2rem;
+}
+
+#version {
+    position: relative;
+    top: -1.8rem;
+    left: 1.5rem;
+    font-size: 1.5rem;
+    color: #1E3E62;
+    height: 0;
+    font-family: "Calculator", sans-serif;
+}
+
 .container {
     background-color: var(--black);
     width: 25rem;
@@ -84,11 +117,11 @@ button {
     font-size: 2.5rem;
 }
 
-#point {
+#point-btn {
     font-size: 2.5rem;
 }
 
-.button-equal {
+#equal-btn {
     /* grid-column: 3/5; */
     /* width: 10rem; */
     width: 4.5rem;
@@ -98,11 +131,11 @@ button {
     /* grid-row: 5/6; */
 }
 
-.button-delete {
+#clear-btn {
     background-color: crimson;
 } 
 
-#del {
+#sup-btn {
     color: crimson;
     font-size: 3rem;
 }
@@ -112,7 +145,7 @@ button:hover {
     scale: 1.2;
 }
 
-/* .button-equal:hover {
+/* #equal-btn:hover {
     scale: 1.15;
 } */
 
@@ -158,5 +191,8 @@ button:hover {
     .buttons *{
         height: 17vw;
         width: 17vw;
+    }
+    #juanollo{
+        font-size: 1.4rem;
     }
 }

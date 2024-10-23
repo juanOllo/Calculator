@@ -12,39 +12,47 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap">
+
 </head>
 <body>
     <!-- <h1>Calculator</h1> -->
+    <div id="juanollo">By: <a href="https://juanollo.github.io/juanOllo-portfolio/" target="_blank">juanOllo</a></div>
     <div class="container">
         <div class="historial"></div>
+        <div id="version"></div>
         <div class="screen" placeholder=""></div>
         <div class="buttons">
-            <button onclick="addInput('CE')" class="button-delete">CE</button>
-            <button onclick="addInput('(')" value="(" class="parent1">(</button>
-            <button onclick="addInput(')')" value=")" class="parent2">)</button>
-            <button onclick="addInput('/')" value="/" class="operator">/</button>
+            <button onclick="addInput('CE')" id="clear-btn">CE</button>
+            <button onclick="addInput('(')">(</button>
+            <button onclick="addInput(')')">)</button>
+            <button onclick="addInput('/')" class="operator">/</button>
+            
             <button onclick="addInput(7)" class="number">7</button>
             <button onclick="addInput(8)" class="number">8</button>
             <button onclick="addInput(9)" class="number">9</button>
-            <button onclick="addInput('*')" value="*" class="operator">*</button>
+            <button onclick="addInput('*')" class="operator">*</button>
+
             <button onclick="addInput(4)" class="number">4</button>
             <button onclick="addInput(5)" class="number">5</button>
             <button onclick="addInput(6)" class="number">6</button>
-            <button onclick="addInput('-')" value="-" class="operator">-</button>
+            <button onclick="addInput('-')" class="operator">-</button>
+
             <button onclick="addInput(1)" class="number">1</button>
             <button onclick="addInput(2)" class="number">2</button>
             <button onclick="addInput(3)" class="number">3</button>
-            <button onclick="addInput('+')" value="+" class="operator">+</button>
-            <button onclick="addInput('<<')" id="del"><<</button>
+            <button onclick="addInput('+')" class="operator">+</button>
+
+            <button onclick="addInput('<<')" id="sup-btn"><<</button>
             <button onclick="addInput(0)" class="number">0</button>
-            
-            <button onclick="addInput('.')" id="point">.</button>
-            <button onclick="addInput('=')" class="button-equal">=</button>
+            <button onclick="addInput('.')" id="point-btn">.</button>
+            <button onclick="addInput('=')" id="equal-btn">=</button>
         </div>
     </div>
-    <!-- <button id="negative">+/-</button> -->
     <div id="error-msj"></div>
     <!-- <script type="module" src="script.js"></script> -->
-    <script src="script2.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
