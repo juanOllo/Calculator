@@ -199,3 +199,87 @@ button:hover {
         font-size: 1.4rem;
     }
 }
+
+@keyframes input-screen-anim {
+    40% {
+        scale: 1.035;
+    }
+}
+
+@keyframes ce-screen-anim {
+    30% {
+        /* scale: 1.03; */
+        height: 0;
+        padding: 0;
+        margin-bottom: 3.5rem;
+        margin-top: 4rem;
+        font-size: 0;
+        /* border-radius: 50%; */
+    }
+}
+
+@keyframes error-anim {
+    10%{
+        color: crimson;
+    }
+    10%{
+        transform: rotate(3deg);
+    }
+    20%{
+        color: crimson;
+    }
+    35%{
+        transform: rotate(-5deg);
+    }
+    60%{
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes ce-hist-anim {
+    30% {
+        font-size: 0;
+    }
+}
+
+@keyframes click-anim {
+    40% {
+        scale: 0.85;
+        background-color: #000000;
+    }
+    /* 100% {
+        scale: 0.7;
+    } */
+}
+
+@keyframes equal-screen-anim {
+    0%{
+        color: #1E3E62;
+        background-color: #FF6500;
+    }
+    10%{
+        background-color: #FF6500;
+    }
+    20% {
+        scale: 1.08;
+        /* color: #FF6500; */
+    }
+}
+
+@keyframes del-screen-anim {
+    0%{
+
+        margin-left: 0.9rem;
+        margin-right: 0;
+    }
+    25%{
+        /* background-color: #FF6500; */
+        width: 80%;
+        padding-right: 0;
+    }
+    100%{
+
+        margin-left: 0.9rem;
+        margin-right: 0;
+    }
+}

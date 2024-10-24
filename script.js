@@ -2,8 +2,10 @@ const formula = document.querySelector(".screen");          // pantalla de la ca
 const hist = document.querySelector(".historial");          // seccion del historial de la equacion
 const errorMsj = document.getElementById("error-msj");      // mensaje de error
 
+const allBtns = document.getElementsByTagName("button");
+
 const version = document.getElementById("version");
-version.innerText = "v0.6.3.2"
+version.innerText = "v0.7"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -16,9 +18,20 @@ const regexNoPosibleResult = /I|N/;
 
 function addInput(ch) {
 
+    
+    for(let b of allBtns){
+        if (b.innerText === ch || parseInt(b.innerText)===ch){
+            anim(b, "click-anim 0.2s ease-in-out");
+            break;
+        }
+    }
+    
+    hist.innerText="";
+    
     switch(typeof(ch)) {
         case "number":
             // console.log("numero ingresado");
+            anim(formula, "input-screen-anim 0.1s ease-in-out");
 
             //si agregas un num desp de un ) entonces agrega un * antes
             if (arrFormula[arrFormula.length-1]===")"){
@@ -43,6 +56,8 @@ function addInput(ch) {
                         showErrMsj("Falta cerrar un parentesis");
                         break;
                     }
+
+                    anim(formula, "equal-screen-anim 0.2s ease");
 
                     //limpia la formula y la agrega al historial: remplaza los +- , -- y **
                     hist.innerText = arrFormula.toString().replaceAll(",", "").replaceAll("+-", "-").replaceAll("--", "+").replaceAll("**", "*");    
@@ -71,8 +86,9 @@ function addInput(ch) {
                 case "(":
                     //no permite abrir desp de un punto
                     if (arrFormula.length>0 && arrFormula[arrFormula.length-1]==="."){
-                        showErrMsj("Pon algo en tu parentesis antes de abrir otro");
+                        showErrMsj("No puedes abrir un parentesis ahora");
                     } else{
+                        anim(formula, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += "(";
                         //si lo anterior en el arr esra un nro entonces agrega un * antes d agregar el (
                         if (arrFormula.length>0 && (!isNaN(arrFormula[arrFormula.length-1]) || arrFormula[arrFormula.length-1]===")" || arrFormula[arrFormula.length-1]==="*")){
@@ -86,6 +102,7 @@ function addInput(ch) {
                 case ")":
                     // agrega ) solo si lo ultimo en el arr es un nro o un )
                     if (contadoDeParesDePArentesis>0 && (!isNaN(arrFormula[arrFormula.length-1]) || arrFormula[arrFormula.length-1]===")")){
+                        anim(formula, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += ")";
                         arrFormula[arrFormula.length] = ")";
                         contadoDeParesDePArentesis--;
@@ -105,9 +122,10 @@ function addInput(ch) {
                             a = 0;
                         }
                     }
-
+                    
                     //solo agrega un punto desp de un nro
                     if (arrFormula.length > 0 && !isNaN(arrFormula[arrFormula.length-1])){
+                        anim(formula, "input-screen-anim 0.1s ease-in-out");
                         arrFormula[arrFormula.length] = ".";
                         formula.innerText += ".";
                     } else{
@@ -116,13 +134,18 @@ function addInput(ch) {
                     break;
 
                 case "CE":
-                    formula.innerText = "";
-                    hist.innerText = "";
+                    anim(formula, "ce-screen-anim 0.2s ease-in-out");
+                    anim(hist, "ce-hist-anim 0.2s ease-in-out")
                     arrFormula = [];
                     contadoDeParesDePArentesis = 0;
+                    setTimeout(() => {
+                        formula.innerText = "";
+                        hist.innerText = "";
+                    }, 50);
                     break;
 
                 case "<<":
+                    anim(formula, "del-screen-anim 0.25s ease-in-out")
                     let pop = arrFormula.pop();
                     switch (pop){
                         case "(":
@@ -140,7 +163,12 @@ function addInput(ch) {
                     }
                     let aux1 = formula.innerText.split("");
                     let aux2 = aux1.pop();
-                    formula.innerText = aux1.toString().replaceAll(",", "");
+
+                    setTimeout(() => {
+                        formula.innerText = aux1.toString().replaceAll(",", "");
+                        hist.innerText="";
+                    }, 20)
+
                     break;
 
                 case "*":
@@ -149,14 +177,15 @@ function addInput(ch) {
                 case "-":
                     //este if no permite agregar un operador desp de un operador
                     //al menos q el segundo operador sea un - y se cumplan cietos requisitos
-                    if (!(ch==="-" && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="(" ))  
-                            &&
-                        (arrFormula.length===0 || (arrFormula.length!==0 && isNaN(arrFormula[arrFormula.length-1])))
-                            &&
-                        (arrFormula[arrFormula.length-1]!==")")
+                    if (!(ch==="-" && arrFormula[arrFormula.length-1]!=="." && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="("))  
+                        &&
+                    (arrFormula.length===0 || (arrFormula.length!==0 && isNaN(arrFormula[arrFormula.length-1])))
+                    &&
+                    (arrFormula[arrFormula.length-1]!==")")
                     ) {
                         showErrMsj("Ingresa un numero");
                     } else {
+                        anim(formula, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += ch;
                         arrFormula[arrFormula.length] = ch;
                     }
@@ -182,4 +211,12 @@ const showErrMsj = (str) => {
         errorMsj.innerText = "";
         errorMsj.style.backgroundColor = "transparent";
     }, 2500);
+    anim(formula, "error-anim 0.6s ease")
+}
+
+//aplica animaciones
+const anim = (btn, str) => {
+    btn.style.animation = "none";
+    btn.offsetHeight;
+    btn.style.animation = str;
 }
