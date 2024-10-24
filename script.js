@@ -3,7 +3,7 @@ const hist = document.querySelector(".historial");          // seccion del histo
 const errorMsj = document.getElementById("error-msj");      // mensaje de error
 
 const version = document.getElementById("version");
-version.innerText = "v0.6.2"
+version.innerText = "v0.6.3"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -45,11 +45,11 @@ function addInput(ch) {
                     }
 
                     //limpia la formula y la agrega al historial: remplaza los +- , -- y **
-                    hist.innerText = arrFormula.toString().replaceAll(",", " ").replaceAll("+ -", "-").replaceAll("- -", "+").replaceAll("* *", "*");    
+                    hist.innerText = arrFormula.toString().replaceAll(",", "").replaceAll("+-", "-").replaceAll("--", "+").replaceAll("**", "*");    
                     
                     //resuelve la ecuacion y la guarda en result
-                    //  uso hist.innerText porq ya quite los * consecutivos
-                    const result = eval(hist.innerText.replaceAll(" ", ""));
+                    //  puedo usar hist.innerText porq ya quite los * consecutivos
+                    const result = eval(hist.innerText);
 
                     //IF que checkea que el resultado no sea infinito
                     if (!(regexNoPosibleResult.test(result))){
@@ -171,7 +171,7 @@ function addInput(ch) {
             break;
     }
 
-    console.log("arrFormula desp de un input: " + arrFormula);
+    // console.log("arrFormula desp de un input: " + arrFormula);
 }
 
 //actualiza errMsj y luego lo vacia
