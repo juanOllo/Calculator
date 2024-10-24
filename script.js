@@ -3,7 +3,7 @@ const hist = document.querySelector(".historial");          // seccion del histo
 const errorMsj = document.getElementById("error-msj");      // mensaje de error
 
 const version = document.getElementById("version");
-version.innerText = "v0.6.3"
+version.innerText = "v0.6.3.2"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;

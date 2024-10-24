@@ -42,6 +42,7 @@ body {
     color: #1E3E62;
     height: 0;
     font-family: "Calculator", sans-serif;
+    max-width: 90vw;
 }
 
 .container {
