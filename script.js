@@ -5,7 +5,7 @@ const errorMsj = document.getElementById("error-msj");      // mensaje de error
 const allBtns = document.getElementsByTagName("button");
 
 const version = document.getElementById("version");
-version.innerText = "v0.7"
+version.innerText = "v0.7.3"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -25,9 +25,14 @@ function addInput(ch) {
             break;
         }
     }
-    
-    hist.innerText="";
-    
+
+    if (hist.innerText!=="" && ch!=="="){
+        anim(hist, "clean-hist-anim 0.3s ease-out");
+        setTimeout(() => {
+            hist.innerText="";
+        }, 180);
+    }
+
     switch(typeof(ch)) {
         case "number":
             // console.log("numero ingresado");
@@ -58,6 +63,7 @@ function addInput(ch) {
                     }
 
                     anim(formula, "equal-screen-anim 0.2s ease");
+                    anim(hist, "equal-hist-anim 0.2s ease");
 
                     //limpia la formula y la agrega al historial: remplaza los +- , -- y **
                     hist.innerText = arrFormula.toString().replaceAll(",", "").replaceAll("+-", "-").replaceAll("--", "+").replaceAll("**", "*");    
@@ -166,7 +172,7 @@ function addInput(ch) {
 
                     setTimeout(() => {
                         formula.innerText = aux1.toString().replaceAll(",", "");
-                        hist.innerText="";
+                        // hist.innerText="";
                     }, 20)
 
                     break;

@@ -85,6 +85,8 @@ body {
     text-align: end;
 
     letter-spacing: 1px;
+
+    z-index: 2;
 }
 
 .buttons {
@@ -242,6 +244,16 @@ button:hover {
     }
 }
 
+@keyframes clean-hist-anim {
+    90%{
+        color: transparent;
+    }
+    100%{
+        width: 1px;
+        color: transparent;
+    }
+}
+
 @keyframes click-anim {
     40% {
         scale: 0.85;
@@ -263,6 +275,19 @@ button:hover {
     20% {
         scale: 1.08;
         /* color: #FF6500; */
+    }
+}
+
+@keyframes equal-hist-anim {
+    0%{
+        color: #1E3E62;
+        color: #FF6500;
+    }
+    10%{
+        color: #FF6500;
+    }
+    20% {
+        scale: 1.08;
     }
 }
 
