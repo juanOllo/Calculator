@@ -58,8 +58,8 @@ body {
 }
 
 .screen {
-    display: block;
-    text-align: end;
+    /* display: block; */
+    text-align: right;
     background-color: var(--blue);
     color: var(--white);
     width: 90%;
@@ -71,6 +71,10 @@ body {
     padding-bottom: 6px;
     font-family: "Calculator", sans-serif;
     overflow: hidden;
+
+    display: flex;
+    justify-content: flex-end;
+    white-space: nowrap;
 }
 
 .historial {
@@ -197,6 +201,9 @@ button:hover {
         height: 17vw;
         width: 17vw;
     }
+    .buttons *:hover{
+        cursor: default;
+    }
     #juanollo{
         font-size: 1.4rem;
     }
@@ -307,4 +314,16 @@ button:hover {
         margin-left: 0.9rem;
         margin-right: 0;
     }
+}
+
+
+#historial-btn {
+    background-color: red;
+    position: relative;
+    width: 0;
+    height: 0;
+    font-size: 1rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    padding: 0;
 }

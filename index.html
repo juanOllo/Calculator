@@ -23,8 +23,9 @@
         <div class="historial"></div>
         <div id="version"></div>
         <div class="screen" placeholder=""></div>
+        <button id="historial-btn" class="hist-hidden">H</button>
         <div class="buttons">
-            <button onclick="addInput('CE')" id="clear-btn">CE</button>
+            <button name="Escape" onclick="addInput('CE')" id="clear-btn">CE</button>
             <button onclick="addInput('(')">(</button>
             <button onclick="addInput(')')">)</button>
             <button onclick="addInput('/')" class="operator">/</button>
@@ -44,10 +45,10 @@
             <button onclick="addInput(3)" class="number">3</button>
             <button onclick="addInput('+')" class="operator">+</button>
 
-            <button onclick="addInput('<<')" id="sup-btn"><<</button>
+            <button name="Backspace" onclick="addInput('<<')" id="sup-btn"><<</button>
             <button onclick="addInput(0)" class="number">0</button>
             <button onclick="addInput('.')" id="point-btn">.</button>
-            <button onclick="addInput('=')" id="equal-btn">=</button>
+            <button name="Enter" onclick="addInput('=')" id="equal-btn">=</button>
         </div>
     </div>
     <div id="error-msj"></div>

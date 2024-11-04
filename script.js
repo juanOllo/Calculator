@@ -1,3 +1,7 @@
+//  TAREAS
+//      Arreglar overflow del screen (clientWidth)
+//      Agregar historial
+
 const formula = document.querySelector(".screen");          // pantalla de la calculadora
 const hist = document.querySelector(".historial");          // seccion del historial de la equacion
 const errorMsj = document.getElementById("error-msj");      // mensaje de error
@@ -5,7 +9,7 @@ const errorMsj = document.getElementById("error-msj");      // mensaje de error
 const allBtns = document.getElementsByTagName("button");
 
 const version = document.getElementById("version");
-version.innerText = "v0.7.3"
+version.innerText = "v0.8"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -13,14 +17,28 @@ let contadoDeParesDePArentesis = 0;
 // arreglo donde guardo todos los elementos de la ecuacion
 let arrFormula = [];
 
+// arreglo donde guardo todas las ecuaciones y sus resultados
+let arrHistorial = [];
+
 //REGEX que no permite q el resultado sea Infinity, -Infiniy o NaN
 const regexNoPosibleResult = /I|N/;
 
+// carga valores desde el teclado
+window.addEventListener("keydown", ({key}) => {
+    // console.log("entro un: ", key);
+    isNaN(parseInt(key)) ? addInput(key) : addInput(parseInt(key));
+});
+
+
 function addInput(ch) {
 
+    // if(formula.length > 13){
+        // console.log(formula.innerText.clientWidth);
+    // }
     
     for(let b of allBtns){
-        if (b.innerText === ch || parseInt(b.innerText)===ch){
+        // if (b.innerText === ch || parseInt(b.innerText)===ch){
+        if (b.innerText === ch || parseInt(b.innerText)===ch || b.name === ch){
             anim(b, "click-anim 0.2s ease-in-out");
             break;
         }
@@ -38,6 +56,13 @@ function addInput(ch) {
             // console.log("numero ingresado");
             anim(formula, "input-screen-anim 0.1s ease-in-out");
 
+            if(hist.innerText !== ""){
+                addInput("CE");
+                setTimeout(() => { formula.innerText += ch;}, 55);
+                arrFormula[arrFormula.length] = ch;
+                break;
+            }
+
             //si agregas un num desp de un ) entonces agrega un * antes
             if (arrFormula[arrFormula.length-1]===")"){
                 arrFormula[arrFormula.length] = "*";
@@ -51,6 +76,7 @@ function addInput(ch) {
 
             switch(ch) {
                 case "=":
+                case "Enter":
 
                     //si la ecuacion no termina en un nro o un ) no puede operar
                     if (isNaN(arrFormula[arrFormula.length - 1]) && arrFormula[arrFormula.length - 1] !== ")") {
@@ -58,8 +84,14 @@ function addInput(ch) {
                         break;
                             //si abriste un parentesis y aun no lo cerraste no puede operar
                     } else if(contadoDeParesDePArentesis!==0){
+
+                        while(contadoDeParesDePArentesis>0){
+                            arrFormula[arrFormula.length] = ")";
+                            contadoDeParesDePArentesis--;
+                        }
+
                         showErrMsj("Falta cerrar un parentesis");
-                        break;
+                        // break;
                     }
 
                     anim(formula, "equal-screen-anim 0.2s ease");
@@ -74,10 +106,16 @@ function addInput(ch) {
 
                     //IF que checkea que el resultado no sea infinito
                     if (!(regexNoPosibleResult.test(result))){
+
                         //trata el resultado que va a mostrar en pantalla
                         //  si es float tambien muestra la parte decimal, si es int entonces no
                         (parseFloat(result) - parseInt(result))===0 ? formula.innerText = parseInt(result) : formula.innerText = parseFloat(result).toFixed(2);
                         
+                        
+                        arrHistorial.unshift([formula.innerText, hist.innerText]);
+                        console.log("historial: ", arrHistorial);
+
+
                         //guarda el result char x char para volver a tratarlo de cualquier manera
                         arrFormula = [...formula.innerText];
                         
@@ -140,6 +178,7 @@ function addInput(ch) {
                     break;
 
                 case "CE":
+                case "Escape":
                     anim(formula, "ce-screen-anim 0.2s ease-in-out");
                     anim(hist, "ce-hist-anim 0.2s ease-in-out")
                     arrFormula = [];
@@ -151,6 +190,7 @@ function addInput(ch) {
                     break;
 
                 case "<<":
+                case "Backspace":
                     anim(formula, "del-screen-anim 0.25s ease-in-out")
                     let pop = arrFormula.pop();
                     switch (pop){
@@ -164,7 +204,7 @@ function addInput(ch) {
                             break;
                     }
                             
-                    if ((pop==="(" && arrFormula[arrFormula.length-1]==="*" ) || (!isNaN(pop) && arrFormula[arrFormula.length-1]==="*")){
+                    if ((pop==="(" && arrFormula[arrFormula.length-1]==="*" ) || (!isNaN(pop) && arrFormula[arrFormula.length-1]==="*" &&  arrFormula[arrFormula.length-2]===")")){
                         pop = arrFormula.pop();
                     }
                     let aux1 = formula.innerText.split("");
@@ -186,7 +226,7 @@ function addInput(ch) {
                     if (!(ch==="-" && arrFormula[arrFormula.length-1]!=="." && (arrFormula.length===0 || !isNaN(arrFormula[arrFormula.length-2]) || arrFormula[arrFormula.length-1]==="("))  
                         &&
                     (arrFormula.length===0 || (arrFormula.length!==0 && isNaN(arrFormula[arrFormula.length-1])))
-                    &&
+                        &&
                     (arrFormula[arrFormula.length-1]!==")")
                     ) {
                         showErrMsj("Ingresa un numero");
@@ -198,6 +238,7 @@ function addInput(ch) {
                     break;
 
                 default:
+                    showErrMsj("Tecla incorrecta");
                     break;
             }
             break;
@@ -226,3 +267,23 @@ const anim = (btn, str) => {
     btn.offsetHeight;
     btn.style.animation = str;
 }
+
+
+const histBtn = document.getElementById("historial-btn");
+const btnsContainer = document.querySelector(".buttons");
+
+histBtn.addEventListener("click", () => {
+    console.log("className: ", histBtn.className);
+
+    if(histBtn.className === "hist-hidden") {
+        btnsContainer.style.display = "none";
+        formula.style.height = "100%";
+        histBtn.classList.remove("hist-hidden");
+        return;
+    } else {
+        btnsContainer.style.display = "grid";
+        formula.style.height = "90%";
+        histBtn.classList.add("hist-hidden");
+        return;
+    }
+})
