@@ -1,15 +1,18 @@
 //  TAREAS
 //      Arreglar overflow del screen (clientWidth)
-//      Agregar historial
+//      Arreglar overflow en el historial-list
 
-const formula = document.querySelector(".screen");          // pantalla de la calculadora
+// const formula = document.querySelector(".screen");          // pantalla de la calculadora
+const screen = document.querySelector(".screen");          // pantalla de la calculadora
+const formula = document.getElementById("screen-resultado");          // resultado dentro de la pantalla
 const hist = document.querySelector(".historial");          // seccion del historial de la equacion
 const errorMsj = document.getElementById("error-msj");      // mensaje de error
 
-const allBtns = document.getElementsByTagName("button");
+// const allBtns = document.getElementsByTagName("button");
+const allBtns = document.querySelectorAll(".btn");
 
 const version = document.getElementById("version");
-version.innerText = "v0.8"
+version.innerText = "v0.9"
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -26,7 +29,11 @@ const regexNoPosibleResult = /I|N/;
 // carga valores desde el teclado
 window.addEventListener("keydown", ({key}) => {
     // console.log("entro un: ", key);
-    isNaN(parseInt(key)) ? addInput(key) : addInput(parseInt(key));
+
+    // IF que no permite usar el teclado con el historial abierto
+    if(histBtn.className === "hist-hidden"){
+        isNaN(parseInt(key)) ? addInput(key) : addInput(parseInt(key));
+    }
 });
 
 
@@ -54,7 +61,7 @@ function addInput(ch) {
     switch(typeof(ch)) {
         case "number":
             // console.log("numero ingresado");
-            anim(formula, "input-screen-anim 0.1s ease-in-out");
+            anim(screen, "input-screen-anim 0.1s ease-in-out");
 
             if(hist.innerText !== ""){
                 addInput("CE");
@@ -94,7 +101,7 @@ function addInput(ch) {
                         // break;
                     }
 
-                    anim(formula, "equal-screen-anim 0.2s ease");
+                    anim(screen, "equal-screen-anim 0.2s ease");
                     anim(hist, "equal-hist-anim 0.2s ease");
 
                     //limpia la formula y la agrega al historial: remplaza los +- , -- y **
@@ -113,7 +120,7 @@ function addInput(ch) {
                         
                         
                         arrHistorial.unshift([formula.innerText, hist.innerText]);
-                        console.log("historial: ", arrHistorial);
+                        // console.log("historial: ", arrHistorial);
 
 
                         //guarda el result char x char para volver a tratarlo de cualquier manera
@@ -132,7 +139,7 @@ function addInput(ch) {
                     if (arrFormula.length>0 && arrFormula[arrFormula.length-1]==="."){
                         showErrMsj("No puedes abrir un parentesis ahora");
                     } else{
-                        anim(formula, "input-screen-anim 0.1s ease-in-out");
+                        anim(screen, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += "(";
                         //si lo anterior en el arr esra un nro entonces agrega un * antes d agregar el (
                         if (arrFormula.length>0 && (!isNaN(arrFormula[arrFormula.length-1]) || arrFormula[arrFormula.length-1]===")" || arrFormula[arrFormula.length-1]==="*")){
@@ -146,7 +153,7 @@ function addInput(ch) {
                 case ")":
                     // agrega ) solo si lo ultimo en el arr es un nro o un )
                     if (contadoDeParesDePArentesis>0 && (!isNaN(arrFormula[arrFormula.length-1]) || arrFormula[arrFormula.length-1]===")")){
-                        anim(formula, "input-screen-anim 0.1s ease-in-out");
+                        anim(screen, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += ")";
                         arrFormula[arrFormula.length] = ")";
                         contadoDeParesDePArentesis--;
@@ -169,7 +176,7 @@ function addInput(ch) {
                     
                     //solo agrega un punto desp de un nro
                     if (arrFormula.length > 0 && !isNaN(arrFormula[arrFormula.length-1])){
-                        anim(formula, "input-screen-anim 0.1s ease-in-out");
+                        anim(screen, "input-screen-anim 0.1s ease-in-out");
                         arrFormula[arrFormula.length] = ".";
                         formula.innerText += ".";
                     } else{
@@ -179,7 +186,7 @@ function addInput(ch) {
 
                 case "CE":
                 case "Escape":
-                    anim(formula, "ce-screen-anim 0.2s ease-in-out");
+                    anim(screen, "ce-screen-anim 0.2s ease-in-out");
                     anim(hist, "ce-hist-anim 0.2s ease-in-out")
                     arrFormula = [];
                     contadoDeParesDePArentesis = 0;
@@ -191,7 +198,7 @@ function addInput(ch) {
 
                 case "<<":
                 case "Backspace":
-                    anim(formula, "del-screen-anim 0.25s ease-in-out")
+                    anim(screen, "del-screen-anim 0.25s ease-in-out")
                     let pop = arrFormula.pop();
                     switch (pop){
                         case "(":
@@ -231,10 +238,13 @@ function addInput(ch) {
                     ) {
                         showErrMsj("Ingresa un numero");
                     } else {
-                        anim(formula, "input-screen-anim 0.1s ease-in-out");
+                        anim(screen, "input-screen-anim 0.1s ease-in-out");
                         formula.innerText += ch;
                         arrFormula[arrFormula.length] = ch;
                     }
+                    break;
+                
+                case "Shift":
                     break;
 
                 default:
@@ -257,8 +267,9 @@ const showErrMsj = (str) => {
     setTimeout(() => {
         errorMsj.innerText = "";
         errorMsj.style.backgroundColor = "transparent";
-    }, 2500);
-    anim(formula, "error-anim 0.6s ease")
+    }, 3500);
+    anim(screen, "error-anim 0.6s ease");
+    anim(formula, "error-anim-h2 0.6s ease");
 }
 
 //aplica animaciones
@@ -271,19 +282,70 @@ const anim = (btn, str) => {
 
 const histBtn = document.getElementById("historial-btn");
 const btnsContainer = document.querySelector(".buttons");
-
 histBtn.addEventListener("click", () => {
-    console.log("className: ", histBtn.className);
+    // console.log("className: ", histBtn.className);
 
     if(histBtn.className === "hist-hidden") {
-        btnsContainer.style.display = "none";
-        formula.style.height = "100%";
+
+        for(let b of allBtns) {
+            anim(b, "buttons-x-historial-anim 0.2s ease-in-out 0s forwards")
+        }
+
+        // for(let i = 0; i < allBtns.length; i++) {
+        //     anim(allBtns[i], `buttons-x-historial-anim 0.2s ease-in-out ${(i+1)/20}s forwards`)
+        // }
+
+        setTimeout(()=>{
+            btnsContainer.style.display = "none";
+            historialList.style.display = "list-item";
+        }, 200)
+        
+        screen.style.maxHeight = "100%";
+        // screen.style.height = "100%";
+        anim(screen, "historial-list-anim 0.2s ease-in-out 0.2s forwards")
         histBtn.classList.remove("hist-hidden");
+        histBtn.style.backgroundColor = "white";
+        histBtn.style.color = "var(--blackblue)";
+
+        listHistorialList(arrHistorial);
         return;
+
     } else {
-        btnsContainer.style.display = "grid";
-        formula.style.height = "90%";
+        for(let b of allBtns) {
+            anim(b, "buttons-x-historial-anim-2 0.2s ease-in-out 0s forwards")
+        }
+
+        setTimeout(() => {
+            btnsContainer.style.display = "grid";
+            screen.style.maxHeight = "13%";
+            screen.style.height = "5rem";
+            historialList.style.display = "none";
+        }, 200)
+
+        anim(screen, "historial-list-anim 0.2s ease-in-out 0s forwards reverse")
         histBtn.classList.add("hist-hidden");
+        histBtn.style.backgroundColor = "var(--blackblue)";
+        histBtn.style.color = "white";
         return;
     }
 })
+
+const historialList = document.getElementById("historial-list");
+const listHistorialList = (arr) => {
+
+    let html = "";
+    
+    for (let elem of arr) {
+        if (elem[0] !== elem[1]){
+            let il = `
+                <li>
+                    <hr>
+                    <h2>${elem[0]}</h2>
+                    <h3>${elem[1]}</h3>
+                </li>`
+            html += il;
+        }
+    }
+
+    historialList.innerHTML = html;
+}
