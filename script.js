@@ -1,6 +1,6 @@
 //  TAREAS
 //      Arreglar overflow del screen (clientWidth)
-//      Arreglar overflow en el historial-list
+//      Arreglar overflow horizontal del historial
 
 // const formula = document.querySelector(".screen");          // pantalla de la calculadora
 const screen = document.querySelector(".screen");          // pantalla de la calculadora
@@ -12,7 +12,7 @@ const errorMsj = document.getElementById("error-msj");      // mensaje de error
 const allBtns = document.querySelectorAll(".btn");
 
 const version = document.getElementById("version");
-version.innerText = "v0.9"
+version.innerText = "v0.9.2";
 
 // sirve para que si abris un parentesis tengas q cerrarlo si o si
 let contadoDeParesDePArentesis = 0;
@@ -30,8 +30,8 @@ const regexNoPosibleResult = /I|N/;
 window.addEventListener("keydown", ({key}) => {
     // console.log("entro un: ", key);
 
-    // IF que no permite usar el teclado con el historial abierto
-    if(histBtn.className === "hist-hidden"){
+    // IF que no permite usar el teclado con el historial abierto (exceptuando el boton del historial)
+    if(histBtn.className === "hist-hidden" || (key === "h" || key === "H")){
         isNaN(parseInt(key)) ? addInput(key) : addInput(parseInt(key));
     }
 });
@@ -132,6 +132,11 @@ function addInput(ch) {
                         formula.innerText = ""
                         arrFormula = [];
                     }
+                    break;
+
+                case "h":
+                case "H":
+                    showHistorial();
                     break;
 
                 case "(":
@@ -282,7 +287,8 @@ const anim = (btn, str) => {
 
 const histBtn = document.getElementById("historial-btn");
 const btnsContainer = document.querySelector(".buttons");
-histBtn.addEventListener("click", () => {
+// histBtn.addEventListener("click", () => {
+const showHistorial = () => {
     // console.log("className: ", histBtn.className);
 
     if(histBtn.className === "hist-hidden") {
@@ -308,7 +314,6 @@ histBtn.addEventListener("click", () => {
         histBtn.style.color = "var(--blackblue)";
 
         listHistorialList(arrHistorial);
-        return;
 
     } else {
         for(let b of allBtns) {
@@ -326,9 +331,9 @@ histBtn.addEventListener("click", () => {
         histBtn.classList.add("hist-hidden");
         histBtn.style.backgroundColor = "var(--blackblue)";
         histBtn.style.color = "white";
-        return;
     }
-})
+// })
+}
 
 const historialList = document.getElementById("historial-list");
 const listHistorialList = (arr) => {
